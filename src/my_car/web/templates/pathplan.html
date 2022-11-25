@@ -46,7 +46,7 @@
 	// Connecting to ROS
 	// -----------------
 	var ros = new ROSLIB.Ros({
-		url: 'ws://'+ip+':9090'
+		url: `ws://${ip}:9090`
 	});
 	
 	var goal_pub;		// publisher object

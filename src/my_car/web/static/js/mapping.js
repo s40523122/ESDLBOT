@@ -6,12 +6,11 @@ var MAP_HEIGHT = window.innerHeight - (window.innerHeight)*0.08;
 
 $(document).ready(function() {
     $body = $("body");
-    var ip = $.cookie("serverip");
 	
     // Connecting to ROS
     // -----------------
     var ros = new ROSLIB.Ros({
-        url: 'ws://'+ip+':9090'
+        url: 'ws://192.168.1.142:9090'
     });
 
     // Create the main viewer.

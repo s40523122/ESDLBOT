@@ -1,3 +1,4 @@
+
 function mapbtn(){
 	console.log("Click!");
     $body.addClass("loading");
@@ -117,12 +118,12 @@ $(document).ready(function() {
 
                                     function connect() {
 
-                                var ip = $.cookie("serverip");
+                               
 
                                 // Connecting to ROS
                                 // -----------------
                                 var ros = new ROSLIB.Ros({
-                                    url: 'ws://'+ip+':9090'
+                                    url: 'ws://192.168.1.142:9090'
                                 });
 
 

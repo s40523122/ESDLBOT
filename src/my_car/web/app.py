@@ -216,13 +216,7 @@ def deletemap():
 	print(mapname)
 	os.system("rm -rf"+" "+os.getcwd()+"/static/"+mapname+".yaml "+os.getcwd()+"/static/"+mapname+".png "+os.getcwd()+"/static/"+mapname+".pgm")
 
-	with get_db():
-	    try:
-	        c = get_db().cursor()
-	        c.execute("DELETE FROM maps WHERE name=?", (mapname,))
-	        c.close()
-	    except Error as e:
-	        print(e)
+	maps.del_map(mapname)
 	return ("successfully deleted map")	
 
 
@@ -286,6 +280,7 @@ def savemap():
 
 	os.system("rosrun map_server map_saver -f"+" "+os.path.join(os.getcwd(),"static",mapname))
 	os.system("convert"+" "+os.getcwd()+"/static/"+mapname+".pgm"+" "+os.getcwd()+"/static/"+mapname+".png")
+	maps.add_sql([mapname])
 	'''
 	with get_db():
 	    try:

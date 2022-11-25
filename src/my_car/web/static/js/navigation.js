@@ -74,7 +74,7 @@ $(document).ready(function() {
     // Connecting to ROS
     // -----------------
     var ros = new ROSLIB.Ros({
-        url: `ws://${ip}:9090`
+        url: 'ws://192.168.1.142:9090'
     });
 
 
@@ -261,6 +261,7 @@ $(document).ready(function() {
             data: event.target.previousSibling.data,
             success: function(response) {
                 console.log(response);
+                location.reload()
             },
             error: function(error) {
                 console.log(error);

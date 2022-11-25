@@ -224,7 +224,30 @@ class mySQL:
 			cursor.close()
 			conn.close()
 	
-
+	def del_map(self, name):
+		# 刪除
+		try: 
+			conn = psycopg2.connect(**DATABASE_URL, sslmode='require')							# 連接 Postgresql
+			cursor = conn.cursor()
+			cursor.execute(f"""DELETE FROM {self.table_name} WHERE names = '{name}'""")
+			conn.commit()
+			count = cursor.rowcount
+			print(count, "Record successfully delete from table")
+			# 將序號重新編排
+			row_no = [x[0] for x in self.read_sql()[1]]										# 取得舊序號
+			#print(row_no)
+			# 取代舊序號
+			for i in range(1, len(row_no)+1):
+				sql_update_query = f"""Update {self.table_name} set record_no = %s where record_no = %s"""
+				cursor.execute(sql_update_query, (i, row_no[i-1]))
+				conn.commit()
+			print("序號重新編排成功 !")
+		except Exception as e:
+			print(e)
+			return "error"
+		finally:
+			cursor.close()
+			conn.close()
 
 #### test ######## test  ######## test ######## test ######## test ######## test ######## test ########
 if __name__ == '__main__':
@@ -248,7 +271,7 @@ if __name__ == '__main__':
 		#sql.creat_sql(table_item)
 		
 		## Add new data ##
-		msg = ["turtle_house_gmapping"]
+		msg = ["terrace"]
 		#sql.add_sql(msg)
 		
 		## Delete table ##
@@ -264,6 +287,7 @@ if __name__ == '__main__':
 			
 		## Delete item ##
 		#sql.del_sql_column("ItemB")
+		#sql.del_map("test")
 		
 		## Change item name ##
 		#sql.rename_sql_column("demo", "Area")
